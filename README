@@ -1,0 +1,22 @@
+sonar-l10n-ja-plugin を作るためのツール。
+
+src
+  |-main
+      |-resources
+          |-org
+              |-sonar
+                  |-l10n
+                      |-checkstyle
+                          |-....html
+                      |-findbugs
+                          |-....html 0.0.1-SNAPSHOTで対応
+                      |-pmd
+                          |-....html
+                      |-squidjava
+                          |-....html
+                      |-checkstyle.properties
+                      |-core.properties
+                      |-findbugs.properties 0.0.1-SNAPSHOTで対応
+                      |-gwt.properties
+                      |-pmd.properties
+                      |-squidjava.properties
