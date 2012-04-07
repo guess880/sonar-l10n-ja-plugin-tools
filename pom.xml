@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.guess880</groupId>
     <artifactId>sonar-l10n-ja-plugin-tools</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Tools for sonar-l10n-ja-plugin</name>
     <description>sonar-l10n-ja-plugin を作るためのツール。</description>
     <scm>
