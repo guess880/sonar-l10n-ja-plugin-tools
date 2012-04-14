@@ -1,4 +1,4 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
  *
  * @author guess880
  */
-final class HtmlWriter {
+public final class HtmlWriter {
 
     /**
      * Sonar resource encoding.
@@ -26,7 +26,7 @@ final class HtmlWriter {
      *            html contents.
      * @throws IOException
      */
-    void write(final File file, final String html) throws IOException {
+    public void write(final File file, final String html) throws IOException {
         final OutputStreamWriter writer = new OutputStreamWriter(
                 new FileOutputStream(file), ENCODING);
         try {

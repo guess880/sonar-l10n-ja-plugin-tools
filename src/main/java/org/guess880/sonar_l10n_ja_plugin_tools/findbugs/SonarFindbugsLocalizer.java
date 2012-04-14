@@ -8,6 +8,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.FindbugsXmlHandler.MessageSet;
 import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.SonarPropertiesLoader.SonarProperty;
+import org.guess880.sonar_l10n_ja_plugin_tools.utils.HtmlWriter;
 import org.xml.sax.SAXException;
 
 /**

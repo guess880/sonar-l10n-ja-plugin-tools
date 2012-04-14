@@ -1,4 +1,4 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.HtmlWriter;
 import org.junit.Test;
 
 public class HtmlWriterTest extends TestBase {
