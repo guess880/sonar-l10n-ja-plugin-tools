@@ -1,4 +1,4 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author guess880
  */
-final class LinkedProperties extends Properties {
+public final class LinkedProperties extends Properties {
 
     /** Serial Version UID */
     private static final long serialVersionUID = 1L;

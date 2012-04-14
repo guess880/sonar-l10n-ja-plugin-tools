@@ -7,16 +7,16 @@ src
               |-sonar
                   |-l10n
                       |-checkstyle
-                          |-....html
+                          |-....html 0.0.3で対応予定
                       |-findbugs
-                          |-....html 0.0.1-SNAPSHOTで対応
+                          |-....html 0.0.1で対応
                       |-pmd
-                          |-....html
+                          |-....html 0.0.2で対応予定
                       |-squidjava
                           |-....html
-                      |-checkstyle.properties
-                      |-core.properties
-                      |-findbugs.properties 0.0.1-SNAPSHOTで対応
-                      |-gwt.properties
-                      |-pmd.properties
-                      |-squidjava.properties
+                      |-checkstyle.properties 0.0.3で対応予定
+                      |-core.properties 対応予定なし
+                      |-findbugs.properties 0.0.1で対応
+                      |-gwt.properties 対応予定なし
+                      |-pmd.properties 0.0.2で対応予定
+                      |-squidjava.properties 対応予定なし

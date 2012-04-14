@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.guess880.sonar_l10n_ja_plugin_tools.utils.LinkedProperties;
+
 /**
  * Writer of localized 'findbugs.properties' of sonar.
  *

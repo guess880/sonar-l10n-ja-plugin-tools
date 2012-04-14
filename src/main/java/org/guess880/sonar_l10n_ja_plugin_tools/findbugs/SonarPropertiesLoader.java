@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.guess880.sonar_l10n_ja_plugin_tools.utils.LinkedProperties;
+
 /**
  * Load 'findbugs.properties' of sonar.
  *

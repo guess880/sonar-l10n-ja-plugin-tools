@@ -1,4 +1,4 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.LinkedProperties;
 import org.junit.Before;
 import org.junit.Test;
 
