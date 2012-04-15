@@ -1,26 +1,24 @@
 package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.guess880.sonar_l10n_ja_plugin_tools.utils.PluginResourceHanlder;
+import org.guess880.sonar_l10n_ja_plugin_tools.utils.SonarLocalizeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Handle the findbugs l10n messages file as 'messages_ja.xml'.
  *
  * @author guess880
  */
-final class FindbugsXmlHandler {
+final class FindbugsXmlHandler implements PluginResourceHanlder {
 
     /**
      * XPath of BugPattern/ShortDescription .
@@ -47,67 +45,96 @@ final class FindbugsXmlHandler {
             .newXPath();
 
     /**
-     * Document for findbugs.xml
+     * Document for "findbugs.xml".
      */
     private Document doc;
 
     /**
-     * Document for findbugs-messages.xml
+     * Document for "findbugs-messages.xml".
      */
     private Document msgDoc;
 
     /**
-     * Load the findbugs l10n messages file.
-     *
-     * @param msgFileName
-     *            findbugs-messages.xml
-     * @param fileName
-     *            findbugs.xml
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * Filepath of "findbugs.xml".
      */
-    void load(final String fileName, final String msgFileName)
-            throws ParserConfigurationException,
-            SAXException, IOException {
-        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-                .newInstance();
-        domFactory.setNamespaceAware(true);
-        doc = domFactory.newDocumentBuilder().parse(fileName);
-        msgDoc = domFactory.newDocumentBuilder().parse(msgFileName);
+    private String findbugsXml;
+
+    /**
+     * Filepath of "findbugs-messages.xml".
+     */
+    private String messagesXml;
+
+    /**
+     * Setter of {@link #findbugsXml}.
+     *
+     * @param findbugsXml
+     *            Filepath of "findbugs.xml".
+     * @return this.
+     */
+    FindbugsXmlHandler setFindbugsXml(final String findbugsXml) {
+        this.findbugsXml = findbugsXml;
+        return this;
     }
 
     /**
-     * Get localized message.
+     * Setter of {@link #messagesXml}
      *
-     * @param key
-     *            BugPattern type.
-     * @return localized messages. ShortDescription and Details.
-     * @throws XPathExpressionException
+     * @param messagesXml
+     *            Filepath of "findbugs-messages.xml".
+     * @return this.
      */
-    MessageSet getMessage(final String key) throws XPathExpressionException {
-        MessageSet ret = null;
-        final Node shortDescription = ((NodeList) XPATH
-                .compile(MessageFormat.format(XPATH_SHORT_DESCRIPTION, key))
-                .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
-        if (shortDescription != null) {
-            final Node categoryKey = ((NodeList) XPATH
-                    .compile(MessageFormat.format(XPATH_CATEGORY_KEY, key))
-                    .evaluate(doc, XPathConstants.NODESET)).item(0);
-            final Node categoryDescription = ((NodeList) XPATH
-                    .compile(
-                            MessageFormat.format(
-                                    XPATH_CATEGORY_DESCRIPTION,
-                                    categoryKey.getTextContent()))
-                    .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
-            final Node details = ((NodeList) XPATH
-                    .compile(MessageFormat.format(XPATH_DETAILS, key))
-                    .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
-            ret = new MessageSet(categoryDescription.getTextContent() + " - "
-                    + shortDescription.getTextContent(),
-                    details.getNextSibling().getTextContent());
+    FindbugsXmlHandler setMessagesXml(final String messagesXml) {
+        this.messagesXml = messagesXml;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void load() throws SonarLocalizeException {
+        try {
+            final DocumentBuilderFactory domFactory = DocumentBuilderFactory
+                    .newInstance();
+            domFactory.setNamespaceAware(true);
+            doc = domFactory.newDocumentBuilder().parse(findbugsXml);
+            msgDoc = domFactory.newDocumentBuilder().parse(messagesXml);
+        } catch (Exception e) {
+            throw new SonarLocalizeException(e);
         }
-        return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getLocalizedResource(final String key) throws SonarLocalizeException {
+        try {
+            MessageSet ret = null;
+            final Node shortDescription = ((NodeList) XPATH
+                    .compile(MessageFormat.format(XPATH_SHORT_DESCRIPTION, key))
+                    .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
+            if (shortDescription != null) {
+                final Node categoryKey = ((NodeList) XPATH
+                        .compile(MessageFormat.format(XPATH_CATEGORY_KEY, key))
+                        .evaluate(doc, XPathConstants.NODESET)).item(0);
+                final Node categoryDescription = ((NodeList) XPATH
+                        .compile(
+                                MessageFormat.format(
+                                        XPATH_CATEGORY_DESCRIPTION,
+                                        categoryKey.getTextContent()))
+                        .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
+                final Node details = ((NodeList) XPATH
+                        .compile(MessageFormat.format(XPATH_DETAILS, key))
+                        .evaluate(msgDoc, XPathConstants.NODESET)).item(0);
+                ret = new MessageSet(categoryDescription.getTextContent() + " - "
+                        + shortDescription.getTextContent(),
+                        details.getNextSibling().getTextContent());
+            }
+            return ret;
+        } catch (Exception e) {
+            throw new SonarLocalizeException(e);
+        }
     }
 
     /**
@@ -120,12 +147,12 @@ final class FindbugsXmlHandler {
         /**
          * Localized ShortDescription.
          */
-        private String shortDescription;
+        private final String shortDescription;
 
         /**
          * Localized Details.
          */
-        private String details;
+        private final String details;
 
         /**
          * Constructor.
@@ -154,10 +181,15 @@ final class FindbugsXmlHandler {
             return details;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public String toString() {
             return "shortDescription: " + shortDescription + "; details: "
                     + details;
         }
+
     }
+
 }

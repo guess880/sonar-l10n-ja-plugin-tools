@@ -18,21 +18,17 @@ public final class LinkedProperties extends Properties {
     /** Serial Version UID */
     private static final long serialVersionUID = 1L;
 
-    /** LinkedHashMap */
-    private Map<Object, Object> props = new LinkedHashMap<Object, Object>();
+    /** prime */
+    private static final int HASHCODE_PRIME = 31;
 
-    /**
-     * Constructor.
-     */
-    public LinkedProperties() {
-        super();
-    }
+    /** LinkedHashMap */
+    private final Map<Object, Object> props = new LinkedHashMap<Object, Object>();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object get(Object key) {
+    public Object get(final Object key) {
         return props.get(key);
     }
 
@@ -40,16 +36,15 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public String getProperty(String key) {
-        Object oval = get(key);
-        return oval instanceof String ? (String) oval : null;
+    public String getProperty(final String key) {
+        return (String) get(key);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(final Object value) {
         return props.containsValue(value);
     }
 
@@ -57,7 +52,7 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return props.containsKey(key);
     }
 
@@ -65,7 +60,7 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return props.containsValue(value);
     }
 
@@ -121,7 +116,7 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public Object put(Object key, Object value) {
+    public Object put(final Object key, final Object value) {
         return props.put(key, value);
     }
 
@@ -129,7 +124,7 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public void putAll(Map<?, ?> t) {
+    public void putAll(final Map<?, ?> t) {
         props.putAll(t);
     }
 
@@ -137,7 +132,7 @@ public final class LinkedProperties extends Properties {
      * {@inheritDoc}
      */
     @Override
-    public Object remove(Object key) {
+    public Object remove(final Object key) {
         return props.remove(key);
     }
 
@@ -146,6 +141,7 @@ public final class LinkedProperties extends Properties {
      */
     @Override
     protected void rehash() {
+        //
     }
 
     /**
@@ -177,8 +173,7 @@ public final class LinkedProperties extends Properties {
      */
     @Override
     public int hashCode() {
-        final int prime = 31;
-        return prime * super.hashCode() + props.hashCode();
+        return HASHCODE_PRIME * super.hashCode() + props.hashCode();
     }
 
 }

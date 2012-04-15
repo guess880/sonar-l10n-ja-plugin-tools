@@ -1,15 +1,13 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-//import java.io.IOException;
 import java.util.Properties;
 
-import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.SonarPropertiesWriter;
 import org.junit.Test;
 
 public class SonarPropertiesWriterTest extends TestBase {

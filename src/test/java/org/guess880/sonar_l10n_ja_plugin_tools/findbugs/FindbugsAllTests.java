@@ -6,10 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-    ArgumentsTest.class,
-    SonarPropertiesWriterTest.class,
+    FindbugsArgumentsTest.class,
     FindbugsXmlHandlerTest.class,
-    SonarPropertiesLoaderTest.class,
+    SonarFindbugsPropertiesLoaderTest.class,
     SonarFindbugsLocalizerTest.class
 })
 public class FindbugsAllTests {

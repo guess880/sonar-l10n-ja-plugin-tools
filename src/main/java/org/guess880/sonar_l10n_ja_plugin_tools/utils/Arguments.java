@@ -1,4 +1,4 @@
-package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
+package org.guess880.sonar_l10n_ja_plugin_tools.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,33 +12,25 @@ import org.kohsuke.args4j.ExampleMode;
 import org.kohsuke.args4j.Option;
 
 /**
- * Arguments Handler.
+ * Arguments parse.
  *
  * @author guess880
  */
-final class Arguments {
+public abstract class Arguments {
 
     private static final String ALIAS_LANGUAGE = "language";
 
     private static final String ALIAS_SONARPROPERTIES = "sonarproperties";
 
-    private static final String ALIAS_FINDBUGSXML = "findbugsxml";
+    public static final String ARG_NM_LANGUAGE = "-l";
 
-    private static final String ALIAS_MESSAGESXML = "messagesxml";
+    public static final String ARG_NM_SONAR_PROPERTIES = "-s";
 
-    static final String ARG_NM_LANGUAGE = "-l";
+    public static final String ARG_NM_PROPERTIES = "-p";
 
-    static final String ARG_NM_SONAR_PROPERTIES = "-s";
+    public static final String ARG_NM_OUTDIR = "-o";
 
-    static final String ARG_NM_FINDBUGSXML = "-f";
-
-    static final String ARG_NM_MESSAGESXML = "-m";
-
-    static final String ARG_NM_PROPERTIES = "-p";
-
-    static final String ARG_NM_OUTDIR = "-o";
-
-    private static final String ALIAS_PREFIX = "--";
+    protected static final String ALIAS_PREFIX = "--";
 
     @Option(required = false, name = ARG_NM_LANGUAGE, aliases = ALIAS_PREFIX
             + ALIAS_LANGUAGE, usage = "Localize language. (e.g. Japanese: ja)")
@@ -47,14 +39,6 @@ final class Arguments {
     @Option(required = false, name = ARG_NM_SONAR_PROPERTIES, aliases = ALIAS_PREFIX
             + ALIAS_SONARPROPERTIES, metaVar = "FILE or URL", usage = "File path of \"findbugs.properties\" of sonar.")
     private String sonarProperties;
-
-    @Option(required = false, name = ARG_NM_FINDBUGSXML, aliases = ALIAS_PREFIX
-            + ALIAS_FINDBUGSXML, metaVar = "FILE or URL", usage = "File path of \"findbugs.xml\" of findbugs.")
-    private String findbugsXml;
-
-    @Option(required = false, name = ARG_NM_MESSAGESXML, aliases = ALIAS_PREFIX
-            + ALIAS_MESSAGESXML, metaVar = "FILE or URL", usage = "File path of \"message_[language].xml\" of findbugs.")
-    private String messagesXml;
 
     @Option(required = false, name = ARG_NM_PROPERTIES, aliases = ALIAS_PREFIX
             + "properties", usage = "File path of \"options.properties\". If use this option then ignore other options excluding \"outdir\".")
@@ -71,18 +55,20 @@ final class Arguments {
     /**
      * Constructor.
      */
-    Arguments() {
+    public Arguments() {
         parser = new CmdLineParser(this);
     }
 
     /**
      * Parse arguments.
      *
-     * @param args Arguments.
-     * @return If illegal arguments exist then return <code>true</code>, otherwise <code>false</code>.
+     * @param args
+     *            Arguments.
+     * @return If illegal arguments exist then return <code>true</code>,
+     *         otherwise <code>false</code>.
      * @throws IOException
      */
-    boolean parse(String[] args) throws IOException {
+    public boolean parse(final String[] args) throws IOException {
         boolean ret = false;
         try {
             parser.parseArgument(args);
@@ -96,21 +82,9 @@ final class Arguments {
                 }
                 language = props.getProperty(ALIAS_LANGUAGE);
                 sonarProperties = props.getProperty(ALIAS_SONARPROPERTIES);
-                findbugsXml = props.getProperty(ALIAS_FINDBUGSXML);
-                messagesXml = props.getProperty(ALIAS_MESSAGESXML);
+                setFromProperties(props);
             }
-            if (language == null) {
-                throw new CmdLineException(parser, "language is empty.");
-            }
-            if (sonarProperties == null) {
-                throw new CmdLineException(parser, "sonarProperties is empty.");
-            }
-            if (findbugsXml == null) {
-                throw new CmdLineException(parser, "findbugsXml is empty.");
-            }
-            if (messagesXml == null) {
-                throw new CmdLineException(parser, "messagesXml is empty.");
-            }
+            validate();
             ret = true;
         } catch (CmdLineException e) {
             lastError = e;
@@ -118,14 +92,32 @@ final class Arguments {
         return ret;
     }
 
+    protected abstract void setFromProperties(Properties props);
+
+    /**
+     * Validate arguments after parsing.
+     *
+     * @throws CmdLineException
+     *             if any error occur
+     */
+    protected void validate() throws CmdLineException {
+        if (language == null) {
+            throw new CmdLineException(parser, "language is empty.");
+        }
+        if (sonarProperties == null) {
+            throw new CmdLineException(parser, "sonarProperties is empty.");
+        }
+    }
+
     /**
      * Printing usage.
      *
-     * @param out Destination.
+     * @param out
+     *            Destination.
      */
-    void printUsage(PrintStream out) {
+    public void printUsage(final PrintStream out) {
         out.println(lastError.getMessage());
-        out.printf("USAGE:%n java SonarFindbugsLocalizer%s%n",
+        out.printf("USAGE:%n%s%n",
                 parser.printExample(ExampleMode.ALL)
                 );
         parser.printUsage(out);
@@ -134,36 +126,29 @@ final class Arguments {
     /**
      * @return {@link #language}
      */
-    String getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
     /**
      * @return {@link #sonarProperties}
      */
-    String getSonarProperties() {
+    public String getSonarProperties() {
         return sonarProperties;
-    }
-
-    /**
-     * @return {@link #findbugsXml}
-     */
-    String getFindbugsXml() {
-        return findbugsXml;
-    }
-
-    /**
-     * @return {@link #messagesXml}
-     */
-    String getMessaagesXml() {
-        return messagesXml;
     }
 
     /**
      * @return {@link #outdir}
      */
-    File getOutdir() {
+    public File getOutdir() {
         return outdir;
+    }
+
+    /**
+     * @return {@link #parser}
+     */
+    protected CmdLineParser getParser() {
+        return parser;
     }
 
 }

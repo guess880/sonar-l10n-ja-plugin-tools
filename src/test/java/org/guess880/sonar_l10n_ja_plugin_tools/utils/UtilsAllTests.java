@@ -6,8 +6,12 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+    ArgumentsTest.class,
     LinkedPropertiesTest.class,
     HtmlWriterTest.class,
+    SonarPropertiesLoaderTest.class,
+    SonarPropertiesWriterTest.class,
+    SonarLocalizerTest.class
 })
 public class UtilsAllTests {
 }
