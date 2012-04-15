@@ -1,8 +1,8 @@
 package org.guess880.sonar_l10n_ja_plugin_tools.findbugs;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.FindbugsXmlHandler;
 import org.guess880.sonar_l10n_ja_plugin_tools.findbugs.FindbugsXmlHandler.MessageSet;
 import org.guess880.sonar_l10n_ja_plugin_tools.utils.SonarLocalizeException;
 import org.junit.Test;
